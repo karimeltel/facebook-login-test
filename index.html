@@ -3,8 +3,10 @@
 <head>
 <title>Facebook Login JavaScript Example</title>
 <meta charset="UTF-8">
+<meta name="google-signin-client_id" content="729953691257-sqf9l6j5qjqgadgbv5gb015q5ht8fpmk.apps.googleusercontent.com">
 </head>
 <body>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 <script>
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
@@ -85,6 +87,19 @@
         'Thanks for logging in, ' + response.name + '!';
     });
   }
+  function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+}
+    function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
 </script>
 
 <!--
@@ -95,9 +110,9 @@
 
 <fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();" onlogout="logout();">
 </fb:login-button>
-
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
 <div id="status">
 </div>
-
+<a href="#" onclick="signOut();">Sign out</a>
 </body>
 </html>
