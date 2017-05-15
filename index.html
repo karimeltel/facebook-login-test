@@ -53,11 +53,7 @@
   // 3. Not logged into Facebook and can't tell if they are logged into
   //    your app or not.
   //
-  // These three cases are handled in the callback function.
-  FB.logout(function(response) {
-   // Person is now logged out
-  });
-    
+  // These three cases are handled in the callback function.  
   FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
   });
@@ -75,6 +71,12 @@
 
   // Here we run a very simple test of the Graph API after login is
   // successful.  See statusChangeCallback() for when this call is made.
+  function logout() {
+    FB.logout(function(response) {
+   // Person is now logged out
+  });
+  }
+  
   function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
@@ -91,7 +93,7 @@
   the FB.login() function when clicked.
 -->
 
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+<fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();" onlogout="logout();">
 </fb:login-button>
 
 <div id="status">
